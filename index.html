@@ -29,7 +29,7 @@
   <script>
     (function () {
       var EXEC = 'https://script.google.com/macros/s/AKfycbyjgOIUpEcow6ZOtcKxsqrl01TPlHgEL782F8YUTzYy9iofGV-SdcwYhQEEULDWJzkrfw/exec';
-      var allowed = ['t', 'd', 'r', 'view'], src = new URLSearchParams(location.search), out = new URLSearchParams();
+      var allowed = ['t', 'd', 'r', 'e', 'view'], src = new URLSearchParams(location.search), out = new URLSearchParams();
       allowed.forEach(function (k) { var v = src.get(k); if (v && /^[A-Za-z0-9-]{1,64}$/.test(v)) out.set(k, v); });
       var url = EXEC + (out.toString() ? '?' + out.toString() : '');
       document.getElementById('app').src = url;
