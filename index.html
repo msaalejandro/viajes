@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d2f52">
+  <title>Vamos juntos · Pausa con Jesús</title>
+  <meta name="description" content="Aparta tu lugar o comparte tu auto para llegar juntos a Pausa con Jesús.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://viajes.pausaconjesus.com/">
+  <meta property="og:title" content="Vamos juntos · Pausa con Jesús">
+  <meta property="og:description" content="Aparta tu lugar o comparte tu auto para llegar juntos a la reunión.">
+  <meta property="og:image" content="https://viajes.pausaconjesus.com/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <style>
+    html,body{margin:0;height:100%;background:#f5f2ec}
+    #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+    #fallback{display:none;font:16px/1.5 system-ui,sans-serif;color:#0d2f52;text-align:center;padding:40px 20px}
+  </style>
+</head>
+<body>
+  <!-- La app vive en Google Apps Script; esta página solo la muestra con la dirección propia. -->
+  <iframe id="app" title="Vamos juntos" allow="geolocation; clipboard-write; web-share"></iframe>
+  <div id="fallback">Si la app no carga, ábrela aquí: <a id="direct" href="#">Vamos juntos</a></div>
+  <script>
+    (function () {
+      var EXEC = 'https://script.google.com/macros/s/AKfycbyjgOIUpEcow6ZOtcKxsqrl01TPlHgEL782F8YUTzYy9iofGV-SdcwYhQEEULDWJzkrfw/exec';
+      var allowed = ['t', 'd', 'r', 'view'], src = new URLSearchParams(location.search), out = new URLSearchParams();
+      allowed.forEach(function (k) { var v = src.get(k); if (v && /^[A-Za-z0-9-]{1,64}$/.test(v)) out.set(k, v); });
+      var url = EXEC + (out.toString() ? '?' + out.toString() : '');
+      document.getElementById('app').src = url;
+      document.getElementById('direct').href = url;
+      if (EXEC.indexOf('script.google.com') === -1) { document.getElementById('app').style.display = 'none'; document.getElementById('fallback').style.display = 'block'; }
+    })();
+  </script>
+</body>
+</html>
