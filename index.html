@@ -24,8 +24,10 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-180.png">
   <style>
-    html,body{margin:0;height:100%;background:#f5f2ec}
-    #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+    /* La página de afuera nunca se desplaza: así la barra del navegador no tapa la app en iPhone. */
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f5f2ec;overscroll-behavior:none}
+    body{position:fixed;inset:0}
+    #app{position:fixed;top:0;left:0;width:100%;height:100%;height:100dvh;border:0;display:block}
     #fallback{display:none;font:16px/1.5 system-ui,sans-serif;color:#0d2f52;text-align:center;padding:40px 20px}
   </style>
 </head>
@@ -42,6 +44,20 @@
       document.getElementById('app').src = url;
       document.getElementById('direct').href = url;
       if (EXEC.indexOf('script.google.com') === -1) { document.getElementById('app').style.display = 'none'; document.getElementById('fallback').style.display = 'block'; }
+
+      // El marco mide exactamente el área visible (sin barras del navegador) y sigue al teclado.
+      var frame = document.getElementById('app'), vv = window.visualViewport;
+      function fit() {
+        var h = vv ? vv.height : window.innerHeight, top = vv ? vv.offsetTop : 0;
+        frame.style.height = Math.round(h) + 'px';
+        frame.style.transform = top ? 'translateY(' + Math.round(top) + 'px)' : '';
+        if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
+      }
+      fit();
+      window.addEventListener('resize', fit);
+      window.addEventListener('orientationchange', function () { setTimeout(fit, 350); });
+      window.addEventListener('scroll', function () { if (window.scrollY) window.scrollTo(0, 0); }, { passive: true });
+      if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
     })();
   </script>
 </body>
